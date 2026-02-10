@@ -1,50 +1,121 @@
-# Welcome to your Expo app 👋
+# Imposter Mobile Game
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A cross-platform party game built with React Native and Expo where players secretly receive roles and attempt to identify the imposters without revealing the shared word.
 
-## Get started
+Designed as a real production-style mobile app with offline-friendly UX, animated transitions, and a dedicated backend API.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## ✨ Features
 
-2. Start the app
+🎭 Multiplayer party gameplay with hidden roles  
+🕵️ One or more imposters per round  
+📚 Category-based word selection (built-in + custom categories)  
+💡 Optional hints for non-imposters  
+🔁 Restartable games with preserved settings  
+📴 Offline-first UI with cached categories  
+🎨 Animated reveal screens and polished transitions  
+📱 Runs on iOS and Android via Expo  
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## 🛠 Tech Stack
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+**Frontend:** React Native, Expo, TypeScript  
+**Routing:** Expo Router (file-based routing)  
+**Storage:** AsyncStorage (local caching)  
+**Backend:** Custom Express API (see `imposter-api`)  
+**Deployment:** Expo (mobile), Fly.io (API)  
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 🧠 Architecture Highlights
 
-When you're ready, run:
+- File-based routing with Expo Router for clean navigation
+- Local caching of categories to reduce API calls and improve load times
+- Clear separation between game setup, reveal flow, and endgame logic
+- Resilient UI that gracefully handles expired or missing games
+- Backend-driven game state with stateless client requests
+- Production-ready configuration for builds and deployment
 
+---
+
+## ▶️ Running Locally
+
+### 1️⃣ Install dependencies
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2️⃣ Start the Expo dev server
+```bash
+npx expo start
+```
 
-## Learn more
+You can then open the app using:
+- **Expo Go** (scan QR code)
+- **iOS Simulator**
+- **Android Emulator**
+- **Development build**
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 📁 Project Structure
 
-## Join the community
+```
+app/
+├─ (tabs)/                 # Tab-based navigation
+├─ get-started.tsx         # Game setup flow
+├─ game-settings.tsx       # Player, category, imposter settings
+├─ reveal.tsx              # Player-by-player reveal screen
+├─ categories.tsx          # Category selection
+├─ create-category.tsx     # Custom category creation
+├─ category-editor.tsx     # Edit custom categories
+├─ how-to-play.tsx         # Game instructions
+├─ share.tsx               # Share game info
+├─ terms-of-use.tsx        # Legal
+├─ privacy-policy.tsx      # Privacy policy
+│
+components/
+├─ ui/                     # Reusable UI primitives
+├─ themed-view.tsx         # Theming helpers
+├─ parallax-scroll-view.tsx
+│
+constants/
+├─ api.ts                  # API base URL
+├─ theme.ts                # App theme constants
+│
+storage/
+├─ customCategories.ts     # AsyncStorage helpers
+│
+types/
+├─ category.ts             # Shared type definitions
+```
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 🔐 Configuration Notes
+
+- No API keys are committed to the repository
+- Backend URL is centralized in `constants/api.ts`
+- `node_modules`, native build folders, and env files are excluded via `.gitignore`
+
+---
+
+## 🚀 Future Improvements
+
+- Lobby / room codes for remote play
+- Timers and round limits
+- Accessibility improvements (larger text, color contrast)
+- Sound effects and haptics
+- App Store / Play Store release builds
+- Analytics for gameplay balancing
+
+---
+
+## 📌 Notes
+
+- This is a mobile-first application (web support is optional)
+- Designed to be played locally in groups
+- Backend API is deployed separately and handles all game logic
+- UI prioritizes clarity and privacy during reveal phases
