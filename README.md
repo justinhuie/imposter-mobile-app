@@ -1,46 +1,44 @@
 # Imposter Mobile Game
 
-A cross-platform party game built with React Native and Expo where players secretly receive roles and attempt to identify the imposters without revealing the shared word.
+A cross-platform party game built with React Native and Expo where players receive roles and attempt to identify the imposters without revealing the shared word.
 
-Designed as a real production-style mobile app with offline-friendly UX, animated transitions, and a dedicated backend API.
-
----
-
-## ✨ Features
-
-🎭 Multiplayer party gameplay with hidden roles  
-🕵️ One or more imposters per round  
-📚 Category-based word selection (built-in + custom categories)  
-💡 Optional hints for non-imposters  
-🔁 Restartable games with preserved settings  
-📴 Offline-first UI with cached categories  
-🎨 Animated reveal screens and polished transitions  
-📱 Runs on iOS and Android via Expo  
+Designed as a mobile app with offline-friendly UX, and a dedicated backend API.
 
 ---
 
-## 🛠 Tech Stack
+## Features
 
-**Frontend:** React Native, Expo, TypeScript  
-**Routing:** Expo Router (file-based routing)  
-**Storage:** AsyncStorage (local caching)  
-**Backend:** Custom Express API (see `imposter-api`)  
-**Deployment:** Expo (mobile), Fly.io (API)  
+- Multiplayer party gameplay with hidden roles  
+- One or more imposters per round 
+- Category-based word selection (built-in + custom categories)  
+- Optional hints for imposters  
+- Restartable games with preserved settings  
+- Offline UI with cached categories  
+- Runs on iOS and Android via Expo  
 
 ---
 
-## 🧠 Architecture Highlights
+## Tech Stack
 
-- File-based routing with Expo Router for clean navigation
+- **Frontend:** React Native, Expo, TypeScript  
+- **Routing:** Expo Router 
+- **Storage:** AsyncStorage  
+- **Backend:** Custom Express API (see `imposter-api`)  
+- **Deployment:** Expo (mobile), Fly.io (API)  
+
+---
+
+## Architecture Highlights
+
+- File-based routing with Expo Router 
 - Local caching of categories to reduce API calls and improve load times
 - Clear separation between game setup, reveal flow, and endgame logic
-- Resilient UI that gracefully handles expired or missing games
+- UI that handles expired or missing games
 - Backend-driven game state with stateless client requests
-- Production-ready configuration for builds and deployment
 
 ---
 
-## ▶️ Running Locally
+## Running Locally
 
 ### 1️⃣ Install dependencies
 ```bash
@@ -60,7 +58,7 @@ You can then open the app using:
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 app/
@@ -94,7 +92,7 @@ types/
 
 ---
 
-## 🔐 Configuration Notes
+## Configuration Notes
 
 - No API keys are committed to the repository
 - Backend URL is centralized in `constants/api.ts`
@@ -102,18 +100,18 @@ types/
 
 ---
 
-## 🚀 Future Improvements
+## Future Improvements
 
-- Lobby / room codes for remote play
-- Timers and round limits
-- Accessibility improvements (larger text, color contrast)
-- Sound effects and haptics
-- App Store / Play Store release builds
-- Analytics for gameplay balancing
+- [ ] Lobby / room codes for remote play
+- [ ] Timers and round limits
+- [ ] Accessibility improvements (larger text, color contrast)
+- [ ] Sound effects and haptics
+- [ ] App Store / Play Store release builds
+- [ ] Analytics for gameplay balancing
 
 ---
 
-## 📌 Notes
+## Notes
 
 - This is a mobile-first application (web support is optional)
 - Designed to be played locally in groups
