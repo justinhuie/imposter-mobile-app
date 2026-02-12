@@ -40,12 +40,12 @@ Designed as a mobile app with offline-friendly UX, and a dedicated backend API.
 
 ## Running Locally
 
-### 1️⃣ Install dependencies
+### Install dependencies
 ```bash
 npm install
 ```
 
-### 2️⃣ Start the Expo dev server
+### Start the Expo dev server
 ```bash
 npx expo start
 ```
@@ -104,10 +104,9 @@ types/
 
 - [ ] Lobby / room codes for remote play
 - [ ] Timers and round limits
-- [ ] Accessibility improvements (larger text, color contrast)
-- [ ] Sound effects and haptics
+- [ ] UI improvements (larger text, color contrast)
+- [ ] Sound effects
 - [ ] App Store / Play Store release builds
-- [ ] Analytics for gameplay balancing
 
 ---
 
@@ -116,4 +115,3 @@ types/
 - This is a mobile-first application (web support is optional)
 - Designed to be played locally in groups
 - Backend API is deployed separately and handles all game logic
-- UI prioritizes clarity and privacy during reveal phases
