@@ -21,7 +21,6 @@ export default function RevealScreen() {
   const numImposters = Number(params.numImposters ?? "0");
   const hintsEnabled = String(params.hintsEnabled ?? "false") === "true";
 
-  // Optional: if you pass customCategories as a JSON string param
   const customCategoriesParam = String(params.customCategories ?? "");
   const customCategories = useMemo(() => {
     if (!customCategoriesParam) return undefined;
@@ -45,7 +44,6 @@ export default function RevealScreen() {
   const [restartLoading, setRestartLoading] = useState(false);
   const [restartError, setRestartError] = useState<string | null>(null);
 
-  // solution state
   const [solutionLoading, setSolutionLoading] = useState(false);
   const [solutionError, setSolutionError] = useState<string | null>(null);
   const [solution, setSolution] = useState<{ word: string; imposters: number[] } | null>(null);
@@ -53,7 +51,6 @@ export default function RevealScreen() {
 
   const done = useMemo(() => player > numPlayers && numPlayers > 0, [player, numPlayers]);
 
-  // background animation
   const bgAnim = useRef(new Animated.Value(0)).current;
   const streakAnim = useRef(new Animated.Value(0)).current;
 
@@ -149,7 +146,6 @@ export default function RevealScreen() {
   async function restartGame() {
     setRestartError(null);
 
-    // If the reveal screen wasn't given the settings, fall back gracefully.
     if (!categoryIds.length || !Number.isFinite(numImposters) || numImposters <= 0) {
       router.replace("/");
       return;
@@ -172,7 +168,6 @@ export default function RevealScreen() {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data?.error ?? `HTTP ${res.status}`);
 
-      // Reset local UI state and jump to the new game
       setPlayer(1);
       setRevealed(false);
       setResult(null);
@@ -200,7 +195,6 @@ export default function RevealScreen() {
 
   return (
     <Animated.View style={[styles.screen, { backgroundColor: bg }]}>
-      {/* streak overlay */}
       <Animated.View
         pointerEvents="none"
         style={[styles.streakLayer, { transform: [{ translateX: streakTranslateX }] }]}
@@ -238,7 +232,6 @@ export default function RevealScreen() {
 
             {solutionOpen && solution && (
               <>
-                {/* Box 1: Solution + Hide (same box) */}
                 <View style={styles.card}>
                   <Text style={styles.solutionWord}>Word: {solution.word}</Text>
 
@@ -252,7 +245,6 @@ export default function RevealScreen() {
                   </Pressable>
                 </View>
 
-                {/* Box 2: Restart only (below) */}
                 <View style={styles.card}>
                   {restartError && <Text style={styles.error}>Error: {restartError}</Text>}
 

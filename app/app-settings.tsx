@@ -22,7 +22,6 @@ export default function AppSettingsScreen() {
       ])
     );
 
-    // Option A: continuous streak movement
     streakAnim.setValue(0);
     const streakLoop = Animated.loop(
       Animated.timing(streakAnim, {
@@ -54,7 +53,6 @@ export default function AppSettingsScreen() {
 
   return (
     <Animated.View style={[styles.screen, { backgroundColor: bg }]}>
-      {/* streak overlay */}
       <Animated.View
         pointerEvents="none"
         style={[styles.streakLayer, { transform: [{ translateX: streakTranslateX }] }]}
@@ -71,15 +69,12 @@ export default function AppSettingsScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.inner}>
-          {/* Back button */}
           <Pressable onPress={() => router.back()} style={styles.backButton}>
             <Text style={styles.backText}>← Back</Text>
           </Pressable>
 
-          {/* Title */}
           <Text style={styles.title}>Settings</Text>
 
-          {/* Buttons */}
           <Pressable style={styles.item} onPress={() => router.push("/privacy-policy")}>
             <Text style={styles.itemText}>Privacy Policy</Text>
           </Pressable>

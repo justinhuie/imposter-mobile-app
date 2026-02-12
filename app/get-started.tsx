@@ -32,11 +32,10 @@ function SelectableCategoryCard({
     Animated.timing(anim, {
       toValue: selected ? 1 : 0,
       duration: 180,
-      useNativeDriver: false, // colors
+      useNativeDriver: false,
     }).start();
   }, [selected, anim]);
 
-  // Dark card -> selected green-tint card
   const bg = anim.interpolate({
     inputRange: [0, 1],
     outputRange: ["rgba(255,255,255,0.06)", "rgba(34,197,94,0.22)"],
@@ -68,7 +67,6 @@ export default function GetStartedScreen() {
   useEffect(() => {
     categoriesRef.current = categories;
   }, [categories]);
-  // background + streak animation
   const bgAnim = useRef(new Animated.Value(0)).current;
   const streakAnim = useRef(new Animated.Value(0)).current;
 
@@ -110,10 +108,8 @@ useFocusEffect(
     async function loadAll() {
       setError(null);
 
-      // Always load custom immediately (fast/local)
       const customCats = await loadCustomCategories();
 
-      // 1) Try cached API categories (instant if exists)
       try {
         const cached = await AsyncStorage.getItem(API_CATS_CACHE_KEY);
 
@@ -126,16 +122,13 @@ useFocusEffect(
               ...customCats.map((c) => ({ ...c, isCustom: true })),
             ]);
           } else {
-            // No cache yet → at least show custom categories right away
             setCategories(customCats.map((c) => ({ ...c, isCustom: true })));
           }
         }
       } catch {
-        // If cache read fails, still show custom
         if (alive) setCategories(customCats.map((c) => ({ ...c, isCustom: true })));
       }
 
-      // 2) Fetch fresh API categories in background (Fly may be waking)
       try {
         const res = await fetch(`${API_BASE}/categories`);
         const body = await res.json().catch(() => ({}));
@@ -143,10 +136,8 @@ useFocusEffect(
 
         const apiCats = body as { id: string; name: string }[];
 
-        // Update cache
         AsyncStorage.setItem(API_CATS_CACHE_KEY, JSON.stringify(apiCats)).catch(() => {});
 
-        // Update UI
         if (alive) {
           setCategories([
             ...apiCats.map((c) => ({ ...c, isCustom: false })),
@@ -178,7 +169,6 @@ useFocusEffect(
 
   return (
     <Animated.View style={[styles.screen, { backgroundColor: bg }]}>
-      {/* soft moving streak overlay */}
       <Animated.View
         pointerEvents="none"
         style={[

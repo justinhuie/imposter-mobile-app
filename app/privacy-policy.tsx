@@ -22,7 +22,6 @@ export default function PrivacyPolicyScreen() {
       ])
     );
 
-    // Option A: continuous streak motion
     streakAnim.setValue(0);
     const streakLoop = Animated.loop(
       Animated.timing(streakAnim, {
@@ -54,7 +53,6 @@ export default function PrivacyPolicyScreen() {
 
   return (
     <Animated.View style={[styles.screen, { backgroundColor: bg }]}>
-      {/* streak overlay */}
       <Animated.View
         pointerEvents="none"
         style={[styles.streakLayer, { transform: [{ translateX: streakTranslateX }] }]}
@@ -69,15 +67,12 @@ export default function PrivacyPolicyScreen() {
         style={{ backgroundColor: "transparent" }}
         contentContainerStyle={styles.container}
       >
-        {/* Back Button */}
         <Pressable onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backText}>← Back</Text>
         </Pressable>
 
-        {/* Title */}
         <Text style={styles.title}>Privacy Policy</Text>
 
-        {/* Message Box */}
         <View style={styles.card}>
           <Text style={styles.text}>
             This app does not collect, store, or share personal data.{"\n\n"}

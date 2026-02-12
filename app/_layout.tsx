@@ -6,7 +6,6 @@ import { StatusBar } from "expo-status-bar";
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      {/* White status bar icons for dark screens */}
       <StatusBar style="light" />
 
       <Stack

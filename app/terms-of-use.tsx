@@ -22,7 +22,6 @@ export default function TermsOfUseScreen() {
       ])
     );
 
-    // Option A: continuous streak movement
     streakAnim.setValue(0);
     const streakLoop = Animated.loop(
       Animated.timing(streakAnim, {
@@ -54,7 +53,6 @@ export default function TermsOfUseScreen() {
 
   return (
     <Animated.View style={[styles.screen, { backgroundColor: bg }]}>
-      {/* streak overlay */}
       <Animated.View
         pointerEvents="none"
         style={[styles.streakLayer, { transform: [{ translateX: streakTranslateX }] }]}
@@ -69,15 +67,12 @@ export default function TermsOfUseScreen() {
         style={{ backgroundColor: "transparent" }}
         contentContainerStyle={styles.container}
       >
-        {/* Back button */}
         <Pressable onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backText}>← Back</Text>
         </Pressable>
 
-        {/* Title */}
         <Text style={styles.title}>Terms of Use</Text>
 
-        {/* Content */}
         <View style={styles.card}>
           <Text style={styles.text}>
             This app is provided as-is for entertainment purposes only.{"\n\n"}

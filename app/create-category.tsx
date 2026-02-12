@@ -26,14 +26,12 @@ export default function CategoriesScreen() {
   const [list, setList] = useState<Category[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // rename modal state
   const [renameOpen, setRenameOpen] = useState(false);
   const [renameId, setRenameId] = useState<string | null>(null);
   const [renameText, setRenameText] = useState("");
 
   const canCreate = name.trim().length > 0;
 
-  // background animation
   const bgAnim = useRef(new Animated.Value(0)).current;
   const streakAnim = useRef(new Animated.Value(0)).current;
 
@@ -45,7 +43,6 @@ export default function CategoriesScreen() {
       ])
     );
 
-    // Option A: continuous streak movement (no visible snap)
     streakAnim.setValue(0);
     const streakLoop = Animated.loop(
       Animated.timing(streakAnim, {
@@ -123,7 +120,6 @@ export default function CategoriesScreen() {
     refresh();
   }
 
-  // ✅ Slide-in delete action (pulled from right, slides back off)
   function renderRightActions(
     progress: Animated.AnimatedInterpolation<number>,
     _dragX: Animated.AnimatedInterpolation<number>,
@@ -131,7 +127,7 @@ export default function CategoriesScreen() {
   ) {
     const translateX = progress.interpolate({
       inputRange: [0, 1],
-      outputRange: [96, 0], // start off-screen-ish -> in place
+      outputRange: [96, 0], 
     });
 
     return (
@@ -151,7 +147,6 @@ export default function CategoriesScreen() {
 
   return (
     <Animated.View style={[styles.screen, { backgroundColor: bg }]}>
-      {/* streak overlay */}
       <Animated.View
         pointerEvents="none"
         style={[styles.streakLayer, { transform: [{ translateX: streakTranslateX }] }]}
@@ -163,7 +158,6 @@ export default function CategoriesScreen() {
       </Animated.View>
 
       <ScrollView style={{ backgroundColor: "transparent" }} contentContainerStyle={styles.container}>
-        {/* Back button */}
         <Pressable onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backText}>← Back</Text>
         </Pressable>
@@ -220,7 +214,6 @@ export default function CategoriesScreen() {
           ))
         )}
 
-        {/* Rename Modal */}
         <Modal visible={renameOpen} transparent animationType="fade" onRequestClose={cancelRename}>
           <View style={styles.modalOverlay}>
             <View style={styles.modalCard}>

@@ -14,7 +14,6 @@ export default function HowToPlayScreen() {
       ])
     );
 
-    // Option A: continuous streak movement (no snap)
     streakAnim.setValue(0);
     const streakLoop = Animated.loop(
       Animated.timing(streakAnim, {
@@ -46,7 +45,6 @@ export default function HowToPlayScreen() {
 
   return (
     <Animated.View style={[styles.screen, { backgroundColor: bg }]}>
-      {/* streak overlay */}
       <Animated.View
         pointerEvents="none"
         style={[styles.streakLayer, { transform: [{ translateX: streakTranslateX }] }]}
@@ -58,7 +56,6 @@ export default function HowToPlayScreen() {
       </Animated.View>
 
       <ScrollView style={{ backgroundColor: "transparent" }} contentContainerStyle={styles.container}>
-        {/* Back button */}
         <Pressable onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backText}>← Back</Text>
         </Pressable>

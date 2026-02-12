@@ -38,12 +38,10 @@ export default function CategoriesScreen() {
       keyboardShouldPersistTaps="handled"
     >
       <View style={styles.inner}>
-        {/* Back button (same place as your other screens) */}
         <Pressable onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backText}>← Back</Text>
         </Pressable>
 
-        {/* Centered title */}
         <Text style={styles.title}>Custom Categories</Text>
 
         <Text style={styles.label}>Category Name</Text>
@@ -94,7 +92,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    paddingTop: 60, // brings everything down
+    paddingTop: 60, 
     backgroundColor: "#fff",
   },
 
@@ -103,7 +101,6 @@ const styles = StyleSheet.create({
     maxWidth: 520,
     alignSelf: "center",
 
-    // centers the block, but still keeps it "lower" instead of dead-center
     marginTop: 40,
 
     gap: 12,

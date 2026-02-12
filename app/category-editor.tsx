@@ -29,7 +29,6 @@ export default function CategoryEditorScreen() {
   const [newHint, setNewHint] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  // edit modal state
   const [editOpen, setEditOpen] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editWord, setEditWord] = useState("");
@@ -38,7 +37,6 @@ export default function CategoryEditorScreen() {
   const canAdd = useMemo(() => newWord.trim().length > 0, [newWord]);
   const canSaveEdit = useMemo(() => editWord.trim().length > 0, [editWord]);
 
-  // background animation (same as other screens)
   const bgAnim = useRef(new Animated.Value(0)).current;
   const streakAnim = useRef(new Animated.Value(0)).current;
 
@@ -151,7 +149,6 @@ export default function CategoryEditorScreen() {
     cancelEdit();
   }
 
-  // Swipe Actions
   function renderRightActions(
     progress: Animated.AnimatedInterpolation<number>,
     _dragX: Animated.AnimatedInterpolation<number>,
