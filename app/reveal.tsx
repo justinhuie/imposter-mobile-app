@@ -1,9 +1,7 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ActivityIndicator,
-  Animated,
-  Easing,
   Pressable,
   StyleSheet,
   Text,
@@ -50,46 +48,6 @@ export default function RevealScreen() {
   const [solutionOpen, setSolutionOpen] = useState(false);
 
   const done = useMemo(() => player > numPlayers && numPlayers > 0, [player, numPlayers]);
-
-  const bgAnim = useRef(new Animated.Value(0)).current;
-  const streakAnim = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    const bgLoop = Animated.loop(
-      Animated.sequence([
-        Animated.timing(bgAnim, { toValue: 1, duration: 6000, useNativeDriver: false }),
-        Animated.timing(bgAnim, { toValue: 0, duration: 6000, useNativeDriver: false }),
-      ])
-    );
-
-    streakAnim.setValue(0);
-    const streakLoop = Animated.loop(
-      Animated.timing(streakAnim, {
-        toValue: 1000,
-        duration: 20000,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      })
-    );
-
-    bgLoop.start();
-    streakLoop.start();
-
-    return () => {
-      bgLoop.stop();
-      streakLoop.stop();
-    };
-  }, [bgAnim, streakAnim]);
-
-  const bg = bgAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["#0B0F14", "#151B22"],
-  });
-
-  const streakTranslateX = streakAnim.interpolate({
-    inputRange: [0, 1000],
-    outputRange: [-300, 300],
-  });
 
   async function doReveal() {
     setError(null);
@@ -194,17 +152,7 @@ export default function RevealScreen() {
   }
 
   return (
-    <Animated.View style={[styles.screen, { backgroundColor: bg }]}>
-      <Animated.View
-        pointerEvents="none"
-        style={[styles.streakLayer, { transform: [{ translateX: streakTranslateX }] }]}
-      >
-        <View style={[styles.streak, styles.streak1]} />
-        <View style={[styles.streak, styles.streak2]} />
-        <View style={[styles.streak, styles.streak3]} />
-        <View style={[styles.streak, styles.streak4]} />
-      </Animated.View>
-
+    <View style={styles.screen}>
       <View style={styles.container}>
         <Pressable onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backText}>← Back</Text>
@@ -300,24 +248,12 @@ export default function RevealScreen() {
           </>
         )}
       </View>
-    </Animated.View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, overflow: "hidden" },
-
-  streakLayer: { ...StyleSheet.absoluteFillObject, opacity: 0.55 },
-  streak: {
-    position: "absolute",
-    height: 2,
-    borderRadius: 999,
-    backgroundColor: "rgba(255,255,255,0.10)",
-  },
-  streak1: { top: 140, left: -40, width: 220, transform: [{ rotate: "-10deg" }] },
-  streak2: { top: 270, left: 40, width: 280, transform: [{ rotate: "8deg" }] },
-  streak3: { top: 420, left: -10, width: 180, transform: [{ rotate: "-6deg" }] },
-  streak4: { top: 560, left: 80, width: 260, transform: [{ rotate: "12deg" }] },
+  screen: { flex: 1, backgroundColor: "#0B0F14" },
 
   container: { flex: 1, padding: 20, paddingTop: 60, gap: 14 },
 

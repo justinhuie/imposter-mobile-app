@@ -6,6 +6,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+
 const API_CATS_CACHE_KEY = "api_categories_cache_v1";
 
 type Category = {
@@ -67,98 +68,64 @@ export default function GetStartedScreen() {
   useEffect(() => {
     categoriesRef.current = categories;
   }, [categories]);
-  const bgAnim = useRef(new Animated.Value(0)).current;
-  const streakAnim = useRef(new Animated.Value(0)).current;
 
-  useEffect(() => {
-    const bgLoop = Animated.loop(
-      Animated.sequence([
-        Animated.timing(bgAnim, { toValue: 1, duration: 6000, useNativeDriver: false }),
-        Animated.timing(bgAnim, { toValue: 0, duration: 6000, useNativeDriver: false }),
-      ])
-    );
+  useFocusEffect(
+    useCallback(() => {
+      let alive = true;
 
-    const streakLoop = Animated.loop(
-      Animated.timing(streakAnim, { toValue: 1, duration: 9000, useNativeDriver: true })
-    );
+      async function loadAll() {
+        setError(null);
 
-    bgLoop.start();
-    streakLoop.start();
+        const customCats = await loadCustomCategories();
 
-    return () => {
-      bgLoop.stop();
-      streakLoop.stop();
-    };
-  }, [bgAnim, streakAnim]);
+        try {
+          const cached = await AsyncStorage.getItem(API_CATS_CACHE_KEY);
 
-  const bg = bgAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["#0B0F14", "#151B22"],
-  });
+          if (alive) {
+            if (cached) {
+              const cachedApiCats = JSON.parse(cached) as { id: string; name: string }[];
 
-  const streakTranslateX = streakAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-120, 120],
-  });
+              setCategories([
+                ...cachedApiCats.map((c) => ({ ...c, isCustom: false })),
+                ...customCats.map((c) => ({ ...c, isCustom: true })),
+              ]);
+            } else {
+              setCategories(customCats.map((c) => ({ ...c, isCustom: true })));
+            }
+          }
+        } catch {
+          if (alive) setCategories(customCats.map((c) => ({ ...c, isCustom: true })));
+        }
 
-useFocusEffect(
-  useCallback(() => {
-    let alive = true;
+        try {
+          const res = await fetch(`${API_BASE}/categories`);
+          const body = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(body?.error ?? `HTTP ${res.status}`);
 
-    async function loadAll() {
-      setError(null);
+          const apiCats = body as { id: string; name: string }[];
 
-      const customCats = await loadCustomCategories();
+          AsyncStorage.setItem(API_CATS_CACHE_KEY, JSON.stringify(apiCats)).catch(() => {});
 
-      try {
-        const cached = await AsyncStorage.getItem(API_CATS_CACHE_KEY);
-
-        if (alive) {
-          if (cached) {
-            const cachedApiCats = JSON.parse(cached) as { id: string; name: string }[];
-
+          if (alive) {
             setCategories([
-              ...cachedApiCats.map((c) => ({ ...c, isCustom: false })),
+              ...apiCats.map((c) => ({ ...c, isCustom: false })),
               ...customCats.map((c) => ({ ...c, isCustom: true })),
             ]);
-          } else {
-            setCategories(customCats.map((c) => ({ ...c, isCustom: true })));
+          }
+        } catch (e: any) {
+          if (alive && categoriesRef.current.length === 0) {
+            setError(String(e?.message ?? e));
           }
         }
-      } catch {
-        if (alive) setCategories(customCats.map((c) => ({ ...c, isCustom: true })));
       }
 
-      try {
-        const res = await fetch(`${API_BASE}/categories`);
-        const body = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(body?.error ?? `HTTP ${res.status}`);
+      loadAll();
 
-        const apiCats = body as { id: string; name: string }[];
-
-        AsyncStorage.setItem(API_CATS_CACHE_KEY, JSON.stringify(apiCats)).catch(() => {});
-
-        if (alive) {
-          setCategories([
-            ...apiCats.map((c) => ({ ...c, isCustom: false })),
-            ...customCats.map((c) => ({ ...c, isCustom: true })),
-          ]);
-        }
-      } catch (e: any) {
-        if (alive && categoriesRef.current.length === 0) {
-          setError(String(e?.message ?? e));
-        }
-      }
-    }
-
-    loadAll();
-
-    return () => {
-      alive = false;
-    };
-  }, [])
-);
-
+      return () => {
+        alive = false;
+      };
+    }, [])
+  );
 
   const selectedIds = useMemo(() => Array.from(selected), [selected]);
 
@@ -168,23 +135,8 @@ useFocusEffect(
   }, [categories, selectedIds]);
 
   return (
-    <Animated.View style={[styles.screen, { backgroundColor: bg }]}>
-      <Animated.View
-        pointerEvents="none"
-        style={[
-          styles.streakLayer,
-          {
-            transform: [{ translateX: streakTranslateX }],
-          },
-        ]}
-      >
-        <View style={[styles.streak, styles.streak1]} />
-        <View style={[styles.streak, styles.streak2]} />
-        <View style={[styles.streak, styles.streak3]} />
-        <View style={[styles.streak, styles.streak4]} />
-      </Animated.View>
-
-      <ScrollView style={{ backgroundColor: "transparent" }} contentContainerStyle={styles.container}>
+    <View style={styles.screen}>
+      <ScrollView style={styles.scroll} contentContainerStyle={styles.container}>
         <Pressable onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backText}>← Back</Text>
         </Pressable>
@@ -237,38 +189,25 @@ useFocusEffect(
           <Text style={styles.primaryText}>Next</Text>
         </Pressable>
       </ScrollView>
-    </Animated.View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    overflow: "hidden",
+    backgroundColor: "#0B0F14",
   },
 
-  streakLayer: {
-    ...StyleSheet.absoluteFillObject,
-    opacity: 0.55,
+  scroll: {
+    backgroundColor: "transparent",
   },
-
-  streak: {
-    position: "absolute",
-    height: 2,
-    borderRadius: 999,
-    backgroundColor: "rgba(255,255,255,0.10)",
-  },
-  streak1: { top: 140, left: -40, width: 220, transform: [{ rotate: "-10deg" }] },
-  streak2: { top: 270, left: 40, width: 280, transform: [{ rotate: "8deg" }] },
-  streak3: { top: 420, left: -10, width: 180, transform: [{ rotate: "-6deg" }] },
-  streak4: { top: 560, left: 80, width: 260, transform: [{ rotate: "12deg" }] },
 
   container: {
     flexGrow: 1,
     padding: 20,
     paddingTop: 60,
     gap: 12,
-    backgroundColor: "transparent",
   },
 
   backButton: {
