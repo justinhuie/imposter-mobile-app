@@ -16,7 +16,7 @@ Designed as a mobile app with offline-friendly UX, and a dedicated backend API.
 
 ## Custom Category Editor
 <img src="./screenshots/imposter-custom-categories.jpg" width="300" height = "600"/>
-<img src="./screenshotsimposter-custom-categories-edit/.jpg" width="300" height = "600"/>
+<img src="./screenshots/imposter-custom-categories-edit/.jpg" width="300" height = "600"/>
 
 ## Game Settings Screen
 <img src="./screenshots/imposter-game-settings.jpg" width="300" height = "600"/>
