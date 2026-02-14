@@ -6,6 +6,18 @@ Designed as a mobile app with offline-friendly UX, and a dedicated backend API.
 
 ---
 
+## Features
+
+- Multiplayer party gameplay with hidden roles  
+- One or more imposters per round 
+- Category-based word selection (built-in + custom categories)  
+- Optional hints for imposters  
+- Restartable games with preserved settings  
+- Offline UI with cached categories  
+- Runs on iOS and Android via Expo  
+
+---
+
 ## Screenshots
 
 ## Home Screen
@@ -26,17 +38,6 @@ Designed as a mobile app with offline-friendly UX, and a dedicated backend API.
 
 ## Reveal Screen After Reveal
 <img src="./screenshots/imposter-reveal.jpg" width="300" height = "600"/>
-
-
-## Features
-
-- Multiplayer party gameplay with hidden roles  
-- One or more imposters per round 
-- Category-based word selection (built-in + custom categories)  
-- Optional hints for imposters  
-- Restartable games with preserved settings  
-- Offline UI with cached categories  
-- Runs on iOS and Android via Expo  
 
 ---
 
