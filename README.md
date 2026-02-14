@@ -9,23 +9,23 @@ Designed as a mobile app with offline-friendly UX, and a dedicated backend API.
 ## Screenshots
 
 ## Home Screen
-<img src="./screenshots/imposter-homepage.jpg" width="900"/>
+<img src="./screenshots/imposter-homepage.jpg" width="900" height = "500"/>
 
 ## Category Selection Screen
-<img src="./screenshots/imposter-categories.jpg" width="900"/>
+<img src="./screenshots/imposter-categories.jpg" width="900" height = "500"/>
 
 ## Custom Category Editor
-<img src="./screenshots/imposter-custom-categories.jpg" width="900"/>
-<img src="./screenshotsimposter-custom-categories-edit/.jpg" width="900"/>
+<img src="./screenshots/imposter-custom-categories.jpg" width="900" height = "500"/>
+<img src="./screenshotsimposter-custom-categories-edit/.jpg" width="900" height = "500"/>
 
 ## Game Settings Screen
-<img src="./screenshots/imposter-game-settings.jpg" width="900"/>
+<img src="./screenshots/imposter-game-settings.jpg" width="900" height = "500"/>
 
 ## Reveal Screen
-<img src="./screenshots/imposter-innocent.jpg" width="900"/>
+<img src="./screenshots/imposter-innocent.jpg" width="900" height = "500"/>
 
 ## Reveal Screen After Reveal
-<img src="./screenshots/imposter-reveal.jpg" width="900"/>
+<img src="./screenshots/imposter-reveal.jpg" width="900" height = "500"/>
 
 
 ## Features
