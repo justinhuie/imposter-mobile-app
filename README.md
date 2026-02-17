@@ -1,20 +1,18 @@
 # Imposter Mobile Game
 
-A cross-platform party game built with React Native and Expo where players receive roles and attempt to identify the imposters without revealing the shared word.
+This is a small party game I built to play in person with friends. Everyone gets a role, most players see the same word, and a few players don’t. The goal is to figure out who’s bluffing without giving the word away.
 
-Designed as a mobile app with offline-friendly UX, and a dedicated backend API.
+The app is designed to work offline during gameplay, with a lightweight backend only used for game setup and shared state.
 
 ---
 
 ## Features
 
-- Multiplayer party gameplay with hidden roles  
-- One or more imposters per round 
-- Category-based word selection (built-in + custom categories)  
-- Optional hints for imposters  
-- Restartable games with preserved settings  
-- Offline UI with cached categories  
-- Runs on iOS and Android via Expo  
+- Start a game with a group and randomly assign roles
+- Supports one or more imposters per round
+- Choose from built-in categories or make your own
+- Give imposters optional hints
+- Restart games without re-entering all settings
 
 ---
 
@@ -43,21 +41,19 @@ Designed as a mobile app with offline-friendly UX, and a dedicated backend API.
 
 ## Tech Stack
 
-- **Frontend:** React Native, Expo, TypeScript  
-- **Routing:** Expo Router 
-- **Storage:** AsyncStorage  
-- **Backend:** Custom Express API (see `imposter-api`)  
-- **Deployment:** Expo (mobile), Fly.io (API)  
+- **Frontend:** React Native, Expo, TypeScript - For cross-platform support 
+- **Routing:** Expo Router - Simple navigation
+- **Storage:** AsyncStorage - Cache custom categories locally
+- **Backend:** Custom Express API (see `imposter-api`) - Manage game state  
+- **Deployment:** Expo (mobile), Fly.io (API) - For backend deployment
 
 ---
 
-## Architecture Highlights
+## Implementation Notes
 
-- File-based routing with Expo Router 
-- Local caching of categories to reduce API calls and improve load times
-- Clear separation between game setup, reveal flow, and endgame logic
-- UI that handles expired or missing games
-- Backend-driven game state with stateless client requests
+- This app uses Expo Router so it's easier to iterate on the game flow as screens were added and removed
+- Categories are cached locally using AsyncStorage so the game does not depend on the backend once a round starts
+- Client is kept lightweight as game state lives on the backend
 
 ---
 
@@ -85,32 +81,31 @@ You can then open the app using:
 
 ```
 app/
-├─ (tabs)/                 # Tab-based navigation
-├─ get-started.tsx         # Game setup flow
-├─ game-settings.tsx       # Player, category, imposter settings
-├─ reveal.tsx              # Player-by-player reveal screen
-├─ categories.tsx          # Category selection
-├─ create-category.tsx     # Custom category creation
-├─ category-editor.tsx     # Edit custom categories
-├─ how-to-play.tsx         # Game instructions
-├─ share.tsx               # Share game info
-├─ terms-of-use.tsx        # Legal
-├─ privacy-policy.tsx      # Privacy policy
-│
+  (tabs)/              # Tab navigation
+  get-started.tsx      # Initial game setup
+  game-settings.tsx    # Player + category config
+  reveal.tsx           # Player-by-player reveal
+  categories.tsx       # Category selection
+  create-category.tsx  # Custom category creation
+  category-editor.tsx  # Edit custom categories
+  how-to-play.tsx
+  share.tsx
+
 components/
-├─ ui/                     # Reusable UI primitives
-├─ themed-view.tsx         # Theming helpers
-├─ parallax-scroll-view.tsx
-│
-constants/
-├─ api.ts                  # API base URL
-├─ theme.ts                # App theme constants
-│
+  ui/                  # Reusable UI pieces
+  themed-view.tsx
+  parallax-scroll-view.tsx
+
 storage/
-├─ customCategories.ts     # AsyncStorage helpers
-│
+  customCategories.ts  # AsyncStorage helpers
+
+constants/
+  api.ts               # Backend URL
+  theme.ts
+
 types/
-├─ category.ts             # Shared type definitions
+  category.ts
+
 ```
 
 ---
@@ -123,16 +118,10 @@ types/
 
 ## Future Improvements
 
-- [ ] Lobby / room codes for remote play
-- [ ] Timers and round limits
-- [ ] UI improvements (larger text, color contrast)
-- [ ] Sound effects
-- [ ] App Store / Play Store release builds
+- Lobby / room codes for remote play
+- Timers and round limits
+- UI improvements (larger text, color contrast)
+- Sound effects
+- App Store / Play Store release builds
 
 ---
-
-## Notes
-
-- This is a mobile-first application (web support is optional)
-- Designed to be played locally in groups
-- Backend API is deployed separately and handles all game logic
